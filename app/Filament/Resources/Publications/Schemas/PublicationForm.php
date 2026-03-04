@@ -7,6 +7,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\Toggle;
 
 class PublicationForm
 {
@@ -46,6 +47,11 @@ class PublicationForm
                 Textarea::make('description')
                     ->rows(3)
                     ->columnSpanFull(),
+
+                Toggle::make('is_featured')
+                    ->label('Sorot Publikasi Ini (Featured)')
+                    ->helperText('Publikasi akan ditampilkan di posisi paling atas secara khusus.')
+                    ->default(false),
             ]);
     }
 }

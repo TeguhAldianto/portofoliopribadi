@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
-
 class ResumeController extends Controller
 {
     public function index()
@@ -14,12 +11,15 @@ class ResumeController extends Controller
 
     public function download()
     {
-        $cvPath = 'public/cv/teguh-aldianto-cv.pdf';
+        // Mencari file langsung di dalam folder public/
+        $cvPath = public_path('CV_Teguh_Aldianto.pdf');
 
-        if (!Storage::exists($cvPath)) {
-            abort(404, 'CV file not found');
+        // Pengecekan apakah file benar-benar ada di folder public/
+        if (!file_exists($cvPath)) {
+            abort(404, 'Maaf, file CV belum tersedia di server.');
         }
 
-        return Storage::download($cvPath, 'Teguh-Aldianto-Resume.pdf');
+        // Memaksa browser untuk mengunduh file
+        return response()->download($cvPath, 'CV_Teguh_Aldianto.pdf');
     }
 }

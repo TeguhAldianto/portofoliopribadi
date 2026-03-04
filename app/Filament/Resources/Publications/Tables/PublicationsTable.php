@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\IconColumn;
 
 class PublicationsTable
 {
@@ -43,6 +44,10 @@ class PublicationsTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
+                IconColumn::make('is_featured')
+                    ->boolean()
+                    ->label('Featured'),
             ])
             ->filters([
                 //

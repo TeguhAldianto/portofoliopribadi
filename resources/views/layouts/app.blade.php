@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-    x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
-    x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }" x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))">
 
 <head>
     <meta charset="utf-8">
@@ -10,16 +8,14 @@
 
     {{-- SEO Meta Tags --}}
     <title>@yield('title', 'Teguh Aldianto - Full-Stack & Mobile Developer')</title>
-    <meta name="description"
-        content="@yield('description', 'Portfolio of Teguh Aldianto, a Full-Stack Web Developer and Mobile Developer with expertise in Laravel, Kotlin, and modern web technologies.')">
+    <meta name="description" content="@yield('description', 'Portfolio of Teguh Aldianto, a Full-Stack Web Developer and Mobile Developer with expertise in Laravel, Kotlin, and modern web technologies.')">
     <meta name="keywords"
         content="Teguh Aldianto, Full-Stack Developer, Mobile Developer, Laravel, Kotlin, Web Development, Android Development">
     <meta name="author" content="Teguh Aldianto">
 
     {{-- Open Graph Tags --}}
     <meta property="og:title" content="@yield('og_title', 'Teguh Aldianto - Full-Stack & Mobile Developer')">
-    <meta property="og:description"
-        content="@yield('og_description', 'Portfolio of Teguh Aldianto showcasing professional projects and expertise in software development.')">
+    <meta property="og:description" content="@yield('og_description', 'Portfolio of Teguh Aldianto showcasing professional projects and expertise in software development.')">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('images/og-image.jpg') }}">
@@ -29,27 +25,57 @@
     <meta name="twitter:title" content="@yield('title', 'Teguh Aldianto - Portfolio')">
     <meta name="twitter:description" content="@yield('description', 'Professional software developer portfolio')">
 
-    {{-- Canonical URL --}}
     <link rel="canonical" href="{{ url()->current() }}">
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+
+    {{-- Script untuk Mencegah Flash of Unstyled Content (FOUC) pada Dark Mode --}}
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia(
+                '(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            // Jika Anda menggunakan Alpine.js di body, dispatch event agar variable 'darkMode' ikut terupdate
+            window.dispatchEvent(new CustomEvent('dark-mode-toggled'));
+        }
+    </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Fix tap highlight di mobile */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
 
     {{-- Styles --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
+<body
+    class="font-sans antialiased text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-900 transition-colors duration-300 flex flex-col min-h-screen">
+
     @include('components.navbar')
 
-    <main class="min-h-screen">
+    <main class="flex-grow">
         @yield('content')
     </main>
 
     @include('components.footer')
+
 </body>
 
 </html>

@@ -13,6 +13,7 @@ class Publication extends Model
         'date',
         'url',
         'description',
+        'is_featured',
     ];
 
     protected $casts = [
@@ -37,7 +38,7 @@ class Publication extends Model
 
     /**
      * Get formatted date
-     * 
+     *
      * @return string
      */
     public function getFormattedDateAttribute(): string

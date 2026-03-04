@@ -30,7 +30,11 @@
                                 Name *
                             </label>
                             <input type="text" name="name" id="name" value="{{ old('name') }}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white @error('name') border-red-500 @enderror">
+                                @class([
+                                    'w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white',
+                                    'border-red-500 dark:border-red-500' => $errors->has('name'),
+                                    'border-gray-300 dark:border-gray-600' => !$errors->has('name'),
+                                ])>
                             @error('name')
                                 <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
@@ -41,7 +45,11 @@
                                 Email *
                             </label>
                             <input type="email" name="email" id="email" value="{{ old('email') }}" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white @error('email') border-red-500 @enderror">
+                                @class([
+                                    'w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white',
+                                    'border-red-500 dark:border-red-500' => $errors->has('email'),
+                                    'border-gray-300 dark:border-gray-600' => !$errors->has('email'),
+                                ])>
                             @error('email')
                                 <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
@@ -60,7 +68,11 @@
                                 Message *
                             </label>
                             <textarea name="message" id="message" rows="5" required
-                                class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white @error('message') border-red-500 @enderror">{{ old('message') }}</textarea>
+                                @class([
+                                    'w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:text-white',
+                                    'border-red-500 dark:border-red-500' => $errors->has('message'),
+                                    'border-gray-300 dark:border-gray-600' => !$errors->has('message'),
+                                ])>{{ old('message') }}</textarea>
                             @error('message')
                                 <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                             @enderror
